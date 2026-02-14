@@ -1,0 +1,217 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "packages": "Packages",
+    "about": "About",
+    "contacts": "Contacts"
+  },
+  "hero": {
+    "title": "Quality healthcare more affordable than you think",
+    "subtitle": "We help you find the best doctors and clinics in Russian regions — save up to 60% without compromising quality",
+    "cta": "Get a consultation"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "We specialize in medical fields where regional clinics offer excellent quality at affordable prices",
+    "dentistry": {
+      "name": "Dentistry",
+      "shortDesc": "Implants, prosthetics, and cosmetic dentistry at leading regional clinics",
+      "description": "Full range of dental services: from professional cleaning to complex implantation and prosthetics. Regional clinics are equipped with modern equipment and use the same materials as capital city centers.",
+      "procedures": [
+        "Dental implants",
+        "Prosthetics (crowns, veneers, bridges)",
+        "Cosmetic dentistry",
+        "Professional cleaning",
+        "Cavity and pulpitis treatment",
+        "Orthodontics (braces, aligners)"
+      ],
+      "advantages": [
+        "Save up to 60% compared to Moscow",
+        "Same premium implants and materials",
+        "Doctors with 10+ years of experience",
+        "Modern equipment and 3D diagnostics"
+      ]
+    },
+    "gynecology": {
+      "name": "Gynecology",
+      "shortDesc": "Diagnostics, treatment, pregnancy care and IVF at modern regional centers",
+      "description": "Comprehensive gynecological care at modern regional medical centers. Experienced specialists, advanced diagnostic equipment, and an individual approach to every patient.",
+      "procedures": [
+        "Comprehensive diagnostics",
+        "Infertility treatment and IVF",
+        "Pregnancy care",
+        "Minimally invasive surgery",
+        "Expert-class ultrasound",
+        "Gynecological endocrinology"
+      ],
+      "advantages": [
+        "Highly qualified specialists",
+        "Modern diagnostic equipment",
+        "Comfortable accommodation",
+        "Individual treatment programs"
+      ]
+    },
+    "phlebology": {
+      "name": "Phlebology",
+      "shortDesc": "Varicose vein treatment with modern minimally invasive methods",
+      "description": "Modern vein disease treatment using minimally invasive technologies. Laser coagulation, sclerotherapy, and other advanced methods for treating varicose veins without hospitalization.",
+      "procedures": [
+        "Endovenous laser coagulation (EVLC)",
+        "Sclerotherapy",
+        "Miniphlebectomy",
+        "Vein ultrasound diagnostics",
+        "Compression therapy",
+        "Conservative treatment"
+      ],
+      "advantages": [
+        "Treatment in 1 day without hospitalization",
+        "Minimal recovery period",
+        "Modern laser technologies",
+        "Save up to 50% from capital city prices"
+      ]
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Three simple steps to quality treatment",
+    "steps": [
+      {
+        "title": "Submit a request",
+        "description": "Tell us about your problem — we'll provide a free consultation and find the best treatment option"
+      },
+      {
+        "title": "Get a treatment plan",
+        "description": "We'll find the best doctor and clinic, prepare a treatment plan and calculate the cost"
+      },
+      {
+        "title": "Get treated",
+        "description": "Come for treatment — we'll organize everything: from doctor appointments to accommodation and transfers"
+      }
+    ]
+  },
+  "packages": {
+    "title": "Service Packages",
+    "subtitle": "Choose the right level of support",
+    "basic": {
+      "name": "Basic",
+      "price": "Free",
+      "description": "Doctor and clinic selection",
+      "features": [
+        "Clinic selection consultation",
+        "Doctor matching for your needs",
+        "Clinic coordination",
+        "Appointment booking"
+      ]
+    },
+    "standard": {
+      "name": "Standard",
+      "price": "from $60",
+      "description": "Full treatment organization",
+      "features": [
+        "Everything in Basic package",
+        "Document preparation",
+        "Examination roadmap",
+        "Test coordination",
+        "Doctor communication before and after"
+      ]
+    },
+    "premium": {
+      "name": "All-Inclusive",
+      "price": "from $180",
+      "description": "Complete trip support",
+      "features": [
+        "Everything in Standard package",
+        "Ticket booking",
+        "Accommodation arrangement",
+        "Transfer and escort",
+        "Personal coordinator 24/7"
+      ]
+    },
+    "cta": "Choose package"
+  },
+  "regions": {
+    "title": "Our Regions",
+    "subtitle": "We work with the best clinics across Russian regions",
+    "mordovia": {
+      "name": "Mordovia (Saransk)",
+      "description": "Modern clinics with European equipment. Some of the most affordable prices in Russia."
+    },
+    "nnov": {
+      "name": "Nizhny Novgorod",
+      "description": "Major medical center of the Volga region. Highly qualified specialists and strong scientific base."
+    },
+    "penza": {
+      "name": "Penza",
+      "description": "Developed network of private clinics. Excellent price-quality ratio for medical services."
+    },
+    "kazan": {
+      "name": "Kazan",
+      "description": "Medical tourism capital of the Volga region. Advanced technologies and international standards."
+    }
+  },
+  "benefits": {
+    "title": "Why CureFind",
+    "subtitle": "Benefits of medical tourism with us",
+    "items": [
+      {
+        "title": "Save up to 60%",
+        "description": "Treatment costs in regions are significantly lower than in Moscow and St. Petersburg, with the same quality"
+      },
+      {
+        "title": "Verified clinics",
+        "description": "We personally verify every clinic and doctor. We only work with certified specialists"
+      },
+      {
+        "title": "Full support",
+        "description": "We organize everything — from initial consultation to your return home. You don't need to worry about anything"
+      }
+    ]
+  },
+  "contactForm": {
+    "title": "Get a free consultation",
+    "subtitle": "Leave a request and we'll contact you within 30 minutes",
+    "name": "Your name",
+    "phone": "Phone",
+    "email": "Email",
+    "message": "Message",
+    "messagePlaceholder": "Tell us about your situation...",
+    "submit": "Submit request",
+    "success": "Thank you! We'll contact you shortly."
+  },
+  "about": {
+    "title": "About CureFind",
+    "mission": {
+      "title": "Our Mission",
+      "text": "We believe that quality healthcare should be accessible to everyone. CureFind is a medical tourism platform that helps patients from major cities find quality and affordable treatment in Russian regions."
+    },
+    "why": {
+      "title": "Why regions?",
+      "text": "Regional clinics are often equipped with the same modern equipment as those in capital cities, and doctors are highly qualified with years of experience. At the same time, treatment costs can be 40-60% lower. We carefully select partner clinics, checking equipment quality, staff qualifications, and patient reviews."
+    },
+    "how": {
+      "title": "How we work",
+      "text": "We handle all organizational matters: selecting a doctor and clinic, preparing documents, organizing the trip, and providing support at every stage of treatment. Our goal is for you to focus on your health, not logistics."
+    }
+  },
+  "contacts": {
+    "title": "Contact Us",
+    "subtitle": "We're always happy to help",
+    "info": {
+      "phone": "+7 (800) 123-45-67",
+      "email": "info@curefind.ru",
+      "address": "Moscow, Example St., 1",
+      "workHours": "Mon-Fri: 9:00 AM — 8:00 PM, Sat: 10:00 AM — 4:00 PM"
+    },
+    "labels": {
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "workHours": "Working hours"
+    }
+  },
+  "footer": {
+    "description": "Medical tourism to Russian regions. Quality treatment at affordable prices.",
+    "rights": "All rights reserved."
+  }
+}
