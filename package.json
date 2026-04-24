@@ -1,5 +1,5 @@
 {
-  "name": "curefind",
+  "name": "medkompas",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,9 +7,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "import:osm": "node scripts/import-osm.mjs",
+    "import:osm:dry": "node scripts/import-osm.mjs --dry-run"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^2.0.2",
+    "@supabase/supabase-js": "^2.104.0",
     "i18next": "^25.8.7",
     "maplibre-gl": "^4.7.1",
     "react": "^19.2.0",

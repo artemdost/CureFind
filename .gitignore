@@ -11,9 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
 
-# Claude Code
+# Claude Code / MCP (может содержать ссылки на внутренние инструменты)
 .claude/
+.mcp.json
 
 # Editor directories and files
 .vscode/*
