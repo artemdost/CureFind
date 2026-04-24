@@ -4,13 +4,13 @@ export default function AboutPage() {
   return (
     <div className="bg-warm min-h-screen">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-        <h1 className="text-3xl font-bold text-stone-800 mb-8">О сервисе CureFind</h1>
+        <h1 className="text-3xl font-bold text-stone-800 mb-8">О сервисе МедКомпас</h1>
 
         <div className="space-y-8 text-stone-600 leading-relaxed">
           <div>
-            <h2 className="text-xl font-semibold text-stone-800 mb-3">Что такое CureFind?</h2>
+            <h2 className="text-xl font-semibold text-stone-800 mb-3">Что такое МедКомпас?</h2>
             <p>
-              CureFind — это агрегатор медицинских услуг в регионах России.
+              МедКомпас — это агрегатор медицинских услуг в регионах России.
               Мы собрали лучшие клиники Саранска, Нижнего Новгорода, Пензы и Казани
               в одном месте, чтобы вы могли сравнить цены, почитать отзывы и выбрать
               подходящего врача, не выходя из дома.

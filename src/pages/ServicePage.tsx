@@ -43,7 +43,7 @@ export default function ServicePage() {
 
           <div className="bg-white rounded-xl shadow-md p-6">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              {t('benefits.title') === 'Почему CureFind' ? 'Преимущества' : 'Advantages'}
+              {t('benefits.title') === 'Почему МедКомпас' ? 'Преимущества' : 'Advantages'}
             </h2>
             <ul className="space-y-3">
               {advantages.map((adv, i) => (

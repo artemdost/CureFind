@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import type { Clinic } from '../data/clinics';
 import StarRating from './StarRating';
+import { formatOpeningHours } from '../lib/openingHours';
 
 interface ClinicCardProps {
   clinic: Clinic;
 }
 
 export default function ClinicCard({ clinic }: ClinicCardProps) {
-  const minPrice = Math.min(...clinic.services.map(s => s.price));
+  const minPrice = clinic.services.length ? Math.min(...clinic.services.map((s) => s.price)) : 0;
+  const hoursShort = formatOpeningHours(clinic.workHours).split(',')[0];
 
   return (
     <Link to={`/clinic/${clinic.id}`} className="block clinic-card">
@@ -48,11 +50,17 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
 
           <div className="flex items-center justify-between pt-3 border-t border-stone-100">
             <div className="text-sm">
-              <span className="text-stone-400">от </span>
-              <span className="font-semibold text-stone-800">{minPrice.toLocaleString('ru-RU')} &#8381;</span>
+              {minPrice > 0 ? (
+                <>
+                  <span className="text-stone-400">от </span>
+                  <span className="font-semibold text-stone-800">{minPrice.toLocaleString('ru-RU')} &#8381;</span>
+                </>
+              ) : (
+                <span className="text-stone-400 text-xs">Цены по запросу</span>
+              )}
             </div>
             <div className="flex items-center gap-3 text-xs text-stone-400">
-              <span>{clinic.workHours.split(',')[0]}</span>
+              {hoursShort && <span>{hoursShort}</span>}
               <span className="text-primary font-medium text-sm">Подробнее &rarr;</span>
             </div>
           </div>

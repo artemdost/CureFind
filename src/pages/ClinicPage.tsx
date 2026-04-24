@@ -1,12 +1,26 @@
+import { useEffect } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
-import { getClinicById } from '../data/clinics';
+import { trackEvent } from '../lib/api';
+import { useClinic } from '../hooks/useClinics';
+import { formatOpeningHours } from '../lib/openingHours';
 import StarRating from '../components/ui/StarRating';
-import MapView from '../components/search/MapView';
+import ClinicMapView from '../components/ClinicMapView';
 
 export default function ClinicPage() {
   const { id } = useParams<{ id: string }>();
-  const clinic = id ? getClinicById(id) : undefined;
+  const { clinic, loading } = useClinic(id);
 
+  useEffect(() => {
+    if (clinic) void trackEvent({ eventType: 'click', clinicId: clinic.id });
+  }, [clinic?.id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-sm text-text-secondary">
+        Загрузка клиники…
+      </div>
+    );
+  }
   if (!clinic) return <Navigate to="/search" replace />;
 
   const servicesByCategory: Record<string, typeof clinic.services> = {};
@@ -44,7 +58,7 @@ export default function ClinicPage() {
                     <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    Проверено CureFind
+                    Проверено МедКомпас
                   </span>
                 )}
               </div>
@@ -84,7 +98,9 @@ export default function ClinicPage() {
               </div>
               <div>
                 <p className="text-xs text-text-light">Режим работы</p>
-                <p className="text-sm font-medium text-text">{clinic.workHours}</p>
+                <p className="text-sm font-medium text-text">
+                  {formatOpeningHours(clinic.workHours) || 'Уточняйте'}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-bg rounded-lg">
@@ -193,10 +209,11 @@ export default function ClinicPage() {
             {/* Map */}
             <div className="bg-card rounded-xl border border-border overflow-hidden fade-in">
               <div className="h-[250px]">
-                <MapView
+                <ClinicMapView
                   clinics={[clinic]}
                   center={[clinic.lat, clinic.lng]}
                   zoom={15}
+                  height="100%"
                 />
               </div>
               <div className="p-4">

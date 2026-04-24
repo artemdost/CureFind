@@ -1,13 +1,32 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { regions, specialties, searchClinics } from '../data/clinics';
+import { SPECIALTIES, trackEvent } from '../lib/api';
+import { useClinics, useRegions } from '../hooks/useClinics';
+import { worksWeekends } from '../lib/openingHours';
 import type { Clinic } from '../data/clinics';
 import ClinicCard from '../components/search/ClinicCard';
-import MapView from '../components/search/MapView';
+import ClinicMapView from '../components/ClinicMapView';
+
+function searchInClinics(list: Clinic[], query: string, regionId?: string, specialty?: string): Clinic[] {
+  let results = [...list];
+  if (regionId) results = results.filter((c) => c.regionId === regionId);
+  if (specialty) results = results.filter((c) => c.specialties.includes(specialty));
+  if (query) {
+    const q = query.toLowerCase();
+    results = results.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        c.description.toLowerCase().includes(q) ||
+        c.specialties.some((s) => s.toLowerCase().includes(q)) ||
+        c.doctors.some((d) => d.name.toLowerCase().includes(q) || d.specialty.toLowerCase().includes(q)) ||
+        c.services.some((s) => s.name.toLowerCase().includes(q)),
+    );
+  }
+  return results;
+}
 
 function clinicWorksWeekends(clinic: Clinic): boolean {
-  const h = clinic.workHours.toLowerCase();
-  return h.includes('сб') || h.includes('вс') || h.includes('ежедневно') || h.includes('круглосуточно');
+  return worksWeekends(clinic.workHours);
 }
 
 function clinicHasDiscounts(clinic: Clinic): boolean {
@@ -15,12 +34,16 @@ function clinicHasDiscounts(clinic: Clinic): boolean {
 }
 
 function clinicMinPrice(clinic: Clinic): number {
-  return Math.min(...clinic.services.map(s => s.price));
+  if (!clinic.services.length) return 0;
+  return Math.min(...clinic.services.map((s) => s.price));
 }
 
 export default function SearchPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { clinics: allClinics, loading } = useClinics();
+  const { regions } = useRegions();
+  const specialties = SPECIALTIES;
 
   const initialRegion = searchParams.get('region') || '';
   const initialSpecialty = searchParams.get('specialty') || '';
@@ -64,7 +87,7 @@ export default function SearchPage() {
   };
 
   const results = useMemo(() => {
-    let found = searchClinics(query, selectedRegion || undefined, selectedSpecialty || undefined);
+    let found = searchInClinics(allClinics, query, selectedRegion || undefined, selectedSpecialty || undefined);
 
     if (maxPrice > 0) {
       found = found.filter(c => clinicMinPrice(c) <= maxPrice);
@@ -88,15 +111,40 @@ export default function SearchPage() {
       if (sortBy === 'price') return clinicMinPrice(a) - clinicMinPrice(b);
       return 0;
     });
-  }, [query, selectedRegion, selectedSpecialty, sortBy, maxPrice, minRating, verifiedOnly, hasDiscounts, worksWeekends]);
+  }, [allClinics, query, selectedRegion, selectedSpecialty, sortBy, maxPrice, minRating, verifiedOnly, hasDiscounts, worksWeekends]);
 
   const mapCenter = useMemo(() => {
     if (selectedRegion) {
-      const region = regions.find(r => r.id === selectedRegion);
+      const region = regions.find((r) => r.id === selectedRegion);
       if (region) return [region.lat, region.lng] as [number, number];
     }
     return undefined;
-  }, [selectedRegion]);
+  }, [selectedRegion, regions]);
+
+  const searchTrackedRef = useRef<string>('');
+  useEffect(() => {
+    const key = `${query}|${selectedRegion}|${selectedSpecialty}`;
+    if (!query && !selectedRegion && !selectedSpecialty) return;
+    if (searchTrackedRef.current === key) return;
+    searchTrackedRef.current = key;
+    const t = window.setTimeout(() => {
+      void trackEvent({
+        eventType: 'search',
+        searchQuery: query || null,
+        metadata: { region: selectedRegion || null, specialty: selectedSpecialty || null },
+      });
+    }, 800);
+    return () => window.clearTimeout(t);
+  }, [query, selectedRegion, selectedSpecialty]);
+
+  const impressionTrackedRef = useRef<Set<string>>(new Set());
+  useEffect(() => {
+    results.slice(0, 20).forEach((c) => {
+      if (impressionTrackedRef.current.has(c.id)) return;
+      impressionTrackedRef.current.add(c.id);
+      void trackEvent({ eventType: 'impression', clinicId: c.id });
+    });
+  }, [results]);
 
   const mapZoom = selectedRegion ? 11 : 5;
 
@@ -308,10 +356,10 @@ export default function SearchPage() {
         <div className={`flex gap-6 ${showMap ? 'flex-col lg:flex-row' : ''}`}>
           {/* Clinic list */}
           <div className={`${showMap ? 'lg:w-1/2' : 'w-full'} space-y-3`}>
-            {results.length > 0 ? (
-              results.map(clinic => (
-                <ClinicCard key={clinic.id} clinic={clinic} />
-              ))
+            {loading ? (
+              <div className="text-center py-16 text-text-secondary text-sm">Загружаем клиники…</div>
+            ) : results.length > 0 ? (
+              results.map((clinic) => <ClinicCard key={clinic.id} clinic={clinic} />)
             ) : (
               <div className="text-center py-16">
                 <div className="text-5xl mb-4">&#128269;</div>
@@ -330,11 +378,12 @@ export default function SearchPage() {
           {/* Map */}
           {showMap && (
             <div className="lg:w-1/2 hidden lg:block">
-              <div className="sticky top-48 h-[calc(100vh-220px)] rounded-xl overflow-hidden border border-border">
-                <MapView
+              <div className="sticky top-48 h-[calc(100vh-220px)]">
+                <ClinicMapView
                   clinics={results}
                   center={mapCenter}
                   zoom={mapZoom}
+                  height="100%"
                   onClinicClick={(id) => navigate(`/clinic/${id}`)}
                 />
               </div>

@@ -151,7 +151,7 @@
     }
   },
   "benefits": {
-    "title": "Why CureFind",
+    "title": "Why MedKompas",
     "subtitle": "Benefits of medical tourism with us",
     "items": [
       {
@@ -180,10 +180,10 @@
     "success": "Thank you! We'll contact you shortly."
   },
   "about": {
-    "title": "About CureFind",
+    "title": "About MedKompas",
     "mission": {
       "title": "Our Mission",
-      "text": "We believe that quality healthcare should be accessible to everyone. CureFind is a medical tourism platform that helps patients from major cities find quality and affordable treatment in Russian regions."
+      "text": "We believe that quality healthcare should be accessible to everyone. MedKompas is a medical tourism platform that helps patients from major cities find quality and affordable treatment in Russian regions."
     },
     "why": {
       "title": "Why regions?",
@@ -199,7 +199,7 @@
     "subtitle": "We're always happy to help",
     "info": {
       "phone": "+7 (800) 123-45-67",
-      "email": "info@curefind.ru",
+      "email": "info@medkompas.ru",
       "address": "Moscow, Example St., 1",
       "workHours": "Mon-Fri: 9:00 AM — 8:00 PM, Sat: 10:00 AM — 4:00 PM"
     },

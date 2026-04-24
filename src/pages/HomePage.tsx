@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
-import { clinics, regions, specialties } from '../data/clinics';
+import { SPECIALTIES } from '../lib/api';
+import { useClinics, useRegions } from '../hooks/useClinics';
 import SearchBar from '../components/SearchBar';
 import ClinicCard from '../components/ClinicCard';
-import MapView from '../components/MapView';
-
-const stats = [
-  { value: '19', label: 'клиник' },
-  { value: '46', label: 'врачей' },
-  { value: '6', label: 'городов' },
-  { value: 'до 60%', label: 'экономия' },
-];
+import ClinicMapView from '../components/ClinicMapView';
 
 export default function HomePage() {
-  const topClinics = clinics
-    .sort((a, b) => b.rating - a.rating)
-    .slice(0, 4);
+  const { clinics, loading } = useClinics();
+  const { regions } = useRegions();
+  const specialties = SPECIALTIES;
+
+  const topClinics = [...clinics].sort((a, b) => b.rating - a.rating).slice(0, 4);
+
+  const totalDoctors = clinics.reduce((acc, c) => acc + c.doctors.length, 0);
+  const totalCities = new Set(clinics.map((c) => c.regionId)).size;
+
+  const stats = [
+    { value: String(clinics.length), label: 'клиник' },
+    { value: String(totalDoctors), label: 'врачей' },
+    { value: String(totalCities), label: 'городов' },
+    { value: 'до 60%', label: 'экономия' },
+  ];
 
   return (
     <>
@@ -67,9 +73,13 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {topClinics.map(clinic => (
-              <ClinicCard key={clinic.id} clinic={clinic} />
-            ))}
+            {loading ? (
+              <div className="col-span-full text-stone-400 text-sm py-8 text-center">Загружаем клиники…</div>
+            ) : topClinics.length === 0 ? (
+              <div className="col-span-full text-stone-400 text-sm py-8 text-center">Пока нет одобренных клиник</div>
+            ) : (
+              topClinics.map((clinic) => <ClinicCard key={clinic.id} clinic={clinic} />)
+            )}
           </div>
 
           <div className="text-center mt-6 sm:hidden">
@@ -89,7 +99,7 @@ export default function HomePage() {
           <p className="text-sm text-stone-400 mb-6">
             Нажмите на маркер, чтобы узнать подробности
           </p>
-          <MapView clinics={clinics} height="420px" />
+          <ClinicMapView clinics={clinics} height="420px" />
         </div>
       </section>
 
@@ -102,23 +112,20 @@ export default function HomePage() {
           <p className="text-sm text-stone-400 mb-8">Выберите город, чтобы увидеть доступные клиники</p>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {regions.map(r => {
-              const count = clinics.filter(c => c.regionId === r.id).length;
-              return (
-                <Link
-                  key={r.id}
-                  to={`/search?region=${r.id}`}
-                  className="bg-white rounded-xl border border-stone-200 p-5 hover:border-primary/30 hover:shadow-md transition-all group"
-                >
-                  <h3 className="font-semibold text-stone-800 group-hover:text-primary transition-colors">
-                    {r.name}
-                  </h3>
-                  <p className="text-sm text-stone-400 mt-1">
-                    {count} {count === 1 ? 'клиника' : count < 5 ? 'клиники' : 'клиник'}
-                  </p>
-                </Link>
-              );
-            })}
+            {regions.map((r) => (
+              <Link
+                key={r.id}
+                to={`/search?region=${r.id}`}
+                className="bg-white rounded-xl border border-stone-200 p-5 hover:border-primary/30 hover:shadow-md transition-all group"
+              >
+                <h3 className="font-semibold text-stone-800 group-hover:text-primary transition-colors">
+                  {r.name}
+                </h3>
+                <p className="text-sm text-stone-400 mt-1">
+                  {r.clinicCount} {r.clinicCount === 1 ? 'клиника' : r.clinicCount < 5 ? 'клиники' : 'клиник'}
+                </p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

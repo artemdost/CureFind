@@ -8,9 +8,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 bg-primary rounded-md flex items-center justify-center">
-                <span className="text-white font-bold text-xs">CF</span>
+                <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M14.5 9.5L12 12l-2.5 2.5L12 12l2.5-2.5z" fill="currentColor" stroke="none" />
+                </svg>
               </div>
-              <span className="text-base font-bold text-white">CureFind</span>
+              <span className="text-base font-bold text-white">МедКомпас</span>
             </div>
             <p className="text-sm leading-relaxed">
               Агрегатор медицинских услуг в регионах России. Сравнивайте цены, выбирайте врачей, записывайтесь онлайн.
@@ -40,15 +43,17 @@ export default function Footer() {
           <div>
             <h4 className="text-white text-sm font-semibold mb-3">Контакты</h4>
             <ul className="space-y-1.5 text-sm">
-              <li>8 (800) 123-45-67</li>
-              <li>info@curefind.ru</li>
-              <li>Пн-Пт: 9:00 — 20:00</li>
+              <li>
+                <a href="mailto:curefind@mail.ru" className="hover:text-white transition-colors">
+                  curefind@mail.ru
+                </a>
+              </li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-stone-800 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-stone-500">
-          <p>&copy; 2024–{new Date().getFullYear()} CureFind</p>
+          <p>&copy; 2024–{new Date().getFullYear()} МедКомпас</p>
           <p>Информация носит ознакомительный характер и не является публичной офертой</p>
         </div>
       </div>

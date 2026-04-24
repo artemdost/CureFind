@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { regions, specialties } from '../data/clinics';
+import { SPECIALTIES } from '../lib/api';
+import { useRegions } from '../hooks/useClinics';
 
 interface SearchBarProps {
   initialRegion?: string;
@@ -12,6 +13,8 @@ export default function SearchBar({ initialRegion = '', initialService = '', com
   const [region, setRegion] = useState(initialRegion);
   const [service, setService] = useState(initialService);
   const navigate = useNavigate();
+  const { regions } = useRegions();
+  const specialties = SPECIALTIES;
 
   const handleSearch = () => {
     const params = new URLSearchParams();

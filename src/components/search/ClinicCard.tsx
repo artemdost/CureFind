@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import type { Clinic } from '../../data/clinics';
 import StarRating from '../ui/StarRating';
+import { formatOpeningHours } from '../../lib/openingHours';
 
 interface ClinicCardProps {
   clinic: Clinic;
 }
 
 export default function ClinicCard({ clinic }: ClinicCardProps) {
-  const minPrice = Math.min(...clinic.services.map(s => s.price));
+  const minPrice = clinic.services.length ? Math.min(...clinic.services.map((s) => s.price)) : 0;
+  const hoursShort = formatOpeningHours(clinic.workHours).split(',')[0];
 
   return (
     <Link to={`/clinic/${clinic.id}`} className="block">
@@ -61,12 +63,18 @@ export default function ClinicCard({ clinic }: ClinicCardProps) {
               <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              {clinic.workHours.split(',')[0]}
+              {hoursShort || '—'}
             </span>
           </div>
           <div className="text-right">
-            <span className="text-xs text-text-light">от </span>
-            <span className="text-sm font-semibold text-primary">{minPrice.toLocaleString('ru-RU')} &#8381;</span>
+            {minPrice > 0 ? (
+              <>
+                <span className="text-xs text-text-light">от </span>
+                <span className="text-sm font-semibold text-primary">{minPrice.toLocaleString('ru-RU')} &#8381;</span>
+              </>
+            ) : (
+              <span className="text-xs text-text-light">По запросу</span>
+            )}
           </div>
         </div>
       </div>

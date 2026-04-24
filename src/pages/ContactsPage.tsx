@@ -38,7 +38,7 @@ export default function ContactsPage() {
                 </div>
                 <div>
                   <p className="text-sm text-stone-400">Email</p>
-                  <p className="font-medium text-stone-800">info@curefind.ru</p>
+                  <p className="font-medium text-stone-800">info@medkompas.ru</p>
                 </div>
               </div>
 
